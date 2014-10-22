@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<bundler>
+	<createTables>
+		<![CDATA[
+
+		create table users (
+			username varchar(200) not null primary key,
+			password varchar(20) not null,
+			realname varchar(200) not null,
+			avatar blob,
+		);
+
+		create table user_role (
+			username varchar(200) not null,
+			rolename varchar(20) not null,
+			primary key (username, rolename),
+			foreign key (username) references users(username)
+		);
+
+		insert into users(username, password, realname) values('alpha', 'alpha pass', 'Alpha User');
+		insert into users(username, password, realname) values('beta', 'beta pass', 'Beta User');
+
+		insert into user_role(username, rolename) values('alpha', 'admin');
+		insert into user_role(username, rolename) values('alpha', 'user');
+		insert into user_role(username, rolename) values('beta', 'user');
+
+	]]>
+	</createTables>
+
+	<getAllUsers><![CDATA[
+		select * from users order by username
+	]]></getAllUsers>
+
+	<getUserPage>
+		<list>
+			select * from users
+			order by username
+			limit ${params[0]}, ${params[1]}
+		</list>
+		<count>select count(*) from users</count>
+	</getUserPage>
+
+	<countUsers>
+		select count(*) from users
+	</countUsers>
+
+	<existsUser>
+		select count(*) from users where username = ${param}
+	</existsUser>
+
+	<getAllAvailableRoles>
+		select distinct(rolename) from user_role order by
+		rolename
+	</getAllAvailableRoles>
+
+	<getUser>
+		select * from users where username = ${params[0]}
+	</getUser>
+
+	<getUserRoles>
+		select rolename from user_role where username =
+		${param}
+	</getUserRoles>
+
+	<getUserRoles dialect="mysql">
+		select rolename from user_role where username = ${param}
+		union select 'presidente'
+	</getUserRoles>
+
+	<insertUser><![CDATA[
+		insert into users(username, password, realname, avatar)
+		values(${param.username}, ${param.password}, ${param.realname}, ${param.avatar});
+	]]></insertUser>
+
+	<updateUser><![CDATA[
+		update users set password = ${param.password}, realname = ${param.realname}, avatar = ${param.avatar}
+		where username = ${param.username}
+	]]></updateUser>
+
+	<deleteUser><![CDATA[
+		delete from users
+		where username = ${param}
+	]]></deleteUser>
+
+	<getUserWithRoles>
+		select * from users where username = ${params[0]} order by username
+		<roles>
+			select rolename from user_role where username =
+			${parent.username}
+		</roles>
+		<roles dialect="mysql">
+			select rolename from user_role where username =
+			${parent.username}
+			union (select 'mysql')
+		</roles>
+	</getUserWithRoles>
+
+	<illegalSyntax>
+		illegal
+	</illegalSyntax>
+
+	<illegalSyntax2>
+		illegal
+	</illegalSyntax2>
+
+	<getUserWithSubSubBean>
+		select *, 13 as "sub.sub.id", 14 as "sub.sub.id2" from users where username = ${params[0]} order by username
+	</getUserWithSubSubBean>
+
+</bundler>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<bundler>
+
+	<createTables>
+		<![CDATA[
+
+		create table simple_enum (
+
+			asstring varchar(200),
+
+			asint integer
+
+		);
+
+	]]>
+	</createTables>
+
+	<empty>
+
+		delete from simple_enum
+
+	</empty>
+
+	<insert>
+
+		insert into simple_enum(asstring, asint) values(${param.toString()}, ${param.ordinal()})
+
+	</insert>
+
+	<listStrings>
+
+		select asstring from simple_enum
+
+	</listStrings>
+
+	<listIntegers>
+
+		select asint from simple_enum
+
+	</listIntegers>
+
+	<listEnumsAsStrings>
+
+		select asstring from simple_enum
+
+	</listEnumsAsStrings>
+
+	<listEnumsAsIntegers>
+
+		select asint from simple_enum
+
+	</listEnumsAsIntegers>
+
+</bundler>
