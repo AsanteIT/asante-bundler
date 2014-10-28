@@ -4,6 +4,7 @@ import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 
 import de.odysseus.el.ExpressionFactoryImpl;
+import de.odysseus.el.ExpressionFactoryImpl.Profile;
 import de.odysseus.el.TreeValueExpression;
 import de.odysseus.el.util.SimpleContext;
 
@@ -14,7 +15,7 @@ import de.odysseus.el.util.SimpleContext;
  */
 class ParamContext {
 
-	private final ExpressionFactory factory = new ExpressionFactoryImpl();
+	private final ExpressionFactory factory = new ExpressionFactoryImpl(Profile.JEE6, null);
 	private final SimpleContext elc = new SimpleContext();
 
 	public Object get(String expression) {

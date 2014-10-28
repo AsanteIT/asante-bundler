@@ -68,10 +68,12 @@ public class Bundler {
 		registerPrimitiveType(InputStream.class);
 
 		// TODO remove statics.
-		Converters.register(Converters.IDENTITY, java.sql.Timestamp.class);
-		Converters.register(Converters.IDENTITY, java.sql.Date.class);
-		Converters.register(Converters.LONG_TO_BOOLEAN, Boolean.class);
-		Converters.register(Converters.BLOB_TO_INPUTSTREAM, InputStream.class);
+		Converters.register(java.sql.Timestamp.class, java.util.Date.class, Converters.IDENTITY);
+		Converters.register(java.sql.Date.class, java.util.Date.class, Converters.IDENTITY);
+		Converters.register(java.lang.Number.class, java.lang.Boolean.class, Converters.NUMBER_TO_BOOLEAN);
+		Converters.register(java.lang.Number.class, java.lang.Boolean.TYPE, Converters.NUMBER_TO_BOOLEAN);
+		Converters.register(java.sql.Blob.class, java.io.InputStream.class, Converters.BLOB_TO_INPUTSTREAM);
+		Converters.register(java.lang.Boolean.class, java.lang.Boolean.TYPE, Converters.IDENTITY);
 
 	}
 

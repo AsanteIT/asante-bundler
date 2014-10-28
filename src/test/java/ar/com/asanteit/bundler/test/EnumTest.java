@@ -105,7 +105,7 @@ public class EnumTest {
 	@Test
 	public void testEnumAsStrings() {
 
-		Converters.register(Converters.STRING_TO_ENUM, SimpleEnum.class);
+		Converters.register(String.class, SimpleEnum.class, Converters.STRING_TO_ENUM);
 
 		try (Transaction tx = Bundler.writeTransaction(ds)) {
 			service.insert(SimpleEnum.A);
@@ -122,7 +122,7 @@ public class EnumTest {
 	@Test
 	public void testEnumAsInteger() {
 
-		Converters.register(Converters.INTEGER_TO_ENUM, SimpleEnum.class);
+		Converters.register(Integer.class, SimpleEnum.class, Converters.INTEGER_TO_ENUM);
 
 		try (Transaction tx = Bundler.writeTransaction(ds)) {
 			service.insert(SimpleEnum.A);
