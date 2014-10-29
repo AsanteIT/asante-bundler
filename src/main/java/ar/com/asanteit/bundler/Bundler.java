@@ -18,6 +18,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
@@ -195,7 +196,7 @@ public class Bundler {
 			methods.add(binding.bundle);
 
 		// The names of the queries in the file.
-		Set<String> queries = bundle.subs.keySet();
+		Set<String> queries = bundle.subs != null ? bundle.subs.keySet() : Collections.<String> emptySet();
 
 		Set<String> temp = new HashSet<String>();
 		temp.addAll(methods);
