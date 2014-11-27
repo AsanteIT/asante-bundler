@@ -5,10 +5,33 @@
 	<groupId>ar.com.asanteit</groupId>
 	<artifactId>bundler</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
-	<name>asante-bundler</name>
+
+	<name>${project.groupId}:${project.artifactId}</name>
+	<description>A simple API for object relational mapping.</description>
+	<url>https://github.com/AsanteIT/asante-bundler</url>
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Martín Schonaker</name>
+			<email>mschonaker@asanteit.com</email>
+			<organization>Asante IT</organization>
+			<organizationUrl>http://www.asanteit.com</organizationUrl>
+		</developer>
+	</developers>
+
 	<scm>
 		<connection>scm:git:ssh://git@github.com/AsanteIT/asante-bundler.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/AsanteIT/asante-bundler.git</developerConnection>
+		<url>git@github.com/AsanteIT/asante-bundler.git</url>
 	</scm>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -112,4 +135,50 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>maven-central-deploy</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<version>2.7</version>
+					</plugin>
+					<plugin>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.9.1</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
